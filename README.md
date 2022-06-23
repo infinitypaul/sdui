@@ -22,6 +22,18 @@ git clone https://github.com/infinitypaul/sdui.git projectname
 composer install 
 ```
 
+2. SQLite Configuration
+
+```
+touch database/database.sqlite
+
+//Add to your env
+
+DB_CONNECTION=sqlite
+DB_FOREIGN_KEYS=true
+
+```
+
 3. Migrate and seed the Database.
 
 ```
