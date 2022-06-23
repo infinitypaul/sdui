@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('news', \App\Http\Controllers\NewsController::class)->except(['create', 'edit']);
+Route::resource('news', \App\Http\Controllers\NewsController::class)->except(['create', 'edit'])->middleware(['auth:sanctum']);

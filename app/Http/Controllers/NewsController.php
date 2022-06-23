@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewsRequest;
 use App\Http\Resources\NewsResource;
 use App\Models\News;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -16,7 +17,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return NewsResource::collection(News::paginate(100));
+        $user = request()->user();
+        return NewsResource::collection($user->news()->with('user')->paginate(100));
     }
 
     /**
@@ -41,9 +43,11 @@ class NewsController extends Controller
      * Display the specified resource.
      * @param News $news
      * @return NewsResource
+     * @throws AuthorizationException
      */
     public function show(News $news)
     {
+        $this->authorize('update', $news);
         return new NewsResource($news);
     }
 
@@ -54,14 +58,18 @@ class NewsController extends Controller
      * @param NewsRequest $request
      * @param News $news
      * @return NewsResource
+     * @throws AuthorizationException
      */
     public function update(NewsRequest $request, News $news)
     {
+        $this->authorize('update', $news);
+
+
         $news->title = $request->title;
         $news->content = $request->content;
         $news->save();
 
-        return new NewsResource($news);
+        return new NewsResource($news->load('user'));
     }
 
     /**
@@ -69,9 +77,12 @@ class NewsController extends Controller
      *
      * @param News $news
      * @return NewsResource
+     * @throws AuthorizationException
      */
     public function destroy(News $news)
     {
+        $this->authorize('update', $news);
+
        $news->delete();
        return new NewsResource($news);
     }
