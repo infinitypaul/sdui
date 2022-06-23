@@ -26,6 +26,6 @@ class LogNews
      */
     public function handle(NewsCreated $event)
     {
-        \Log::info(print_r($event->news, true));
+        \Log::info($event->news->title);
     }
 }
