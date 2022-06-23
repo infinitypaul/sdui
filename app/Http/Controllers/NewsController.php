@@ -64,10 +64,7 @@ class NewsController extends Controller
     {
         $this->authorize('update', $news);
 
-
-        $news->title = $request->title;
-        $news->content = $request->content;
-        $news->save();
+        $news->update($request->validationData());
 
         return new NewsResource($news->load('user'));
     }
