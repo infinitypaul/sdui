@@ -1,5 +1,5 @@
 <p align="center">NEWS CRUD</p>
-<p align="center"><a href="https://infinitypaul.medium.com">Creator</a> | <a href="https://marinetask.herokuapp.com/api/position">Demo URL</a></p>
+<p align="center"><a href="https://infinitypaul.medium.com">Creator</a></p>
 
 ## Tech Stack
 
