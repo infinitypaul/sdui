@@ -48,7 +48,6 @@ class NewsTest extends TestCase
     }
 
     public function test_we_can_read_news(){
-        //$me = User::factory()->has(News::factory()->count(5), 'news')->create();
         News::factory()->count(5)->create([
             'user_id' => $this->user->id
         ]);

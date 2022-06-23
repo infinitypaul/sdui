@@ -35,7 +35,7 @@ class NewsController extends Controller
         $news->user()->associate($request->user());
         $news->save();
 
-        return new NewsResource($news);
+        return new NewsResource($news->load('user'));
 
     }
 
@@ -48,7 +48,7 @@ class NewsController extends Controller
     public function show(News $news)
     {
         $this->authorize('update', $news);
-        return new NewsResource($news);
+        return new NewsResource($news->load('user'));
     }
 
 
