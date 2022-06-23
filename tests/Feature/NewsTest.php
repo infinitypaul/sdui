@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Events\NewsCreated;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -108,5 +110,19 @@ class NewsTest extends TestCase
         $response = $this->deleteJson("api/news/$news->id");
 
         $response->assertStatus(403);
+    }
+
+
+    public function test_event_fired_on_news_created()
+    {
+        Event::fake();
+
+        $this->postJson('/api/news', [
+            'title' => 'Paul Edward',
+            'content' => 'World Best'
+        ]);
+
+        Event::assertDispatched(NewsCreated::class);
+
     }
 }
